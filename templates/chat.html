@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EvrenAI Sales Chat</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            background: #727292;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .header {
+            background: #4a148c;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .chat-container {
+            background: #ffffff;
+            padding: 10px;
+            flex: 1;
+            overflow-y: auto;
+            border-radius: 10px;
+            margin: 10px;
+            color: #000;
+        }
+
+        .chat-message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+            max-width: 70%;
+            line-height: 1.5;
+        }
+
+        .chat-message:nth-child(odd) {
+            background: #080808;
+            color: #fff;
+            margin-left: auto;
+        }
+
+        .chat-message:nth-child(even) {
+            background: #070707;
+            color: #fff;
+        }
+
+        .input-container {
+            display: flex;
+            padding: 10px;
+            background: #4a148c;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 14px;
+            flex: 1;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 14px;
+            background: #8e24aa;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #6a1b9a;
+        }
+
+        .evaluation-box {
+            background: #6a1b9a;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px;
+            color: white;
+            display: none;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            background: #4a148c;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>EvrenAI Sales Chat</h1>
+    </div>
+
+    <div class="chat-container" id="chatBox"></div>
+    <div id="evaluationBox" class="evaluation-box"></div>
+
+    <div class="input-container">
+        <input type="text" id="userInput" placeholder="Type your message here...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <div class="footer">Created by Abdul Qayyum</div>
+
+    <script>
+        let conversationEnded = false;
+
+        async function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const chatBox = document.getElementById('chatBox');
+            const message = userInput.value.trim();
+
+            if (!message) return;
+
+            // Add user message to chat
+            chatBox.innerHTML += `<div class="chat-message">${message}</div>`;
+            userInput.value = '';
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `message=${encodeURIComponent(message)}`
+                });
+
+                const data = await response.json();
+                chatBox.innerHTML += `<div class="chat-message">${data.response}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+                // Trigger evaluation only if the user explicitly ends the conversation
+                if (isFarewellMessage(message) && !conversationEnded) {
+                    conversationEnded = true;
+                    await triggerEvaluation(chatBox);
+                }
+            } catch (error) {
+                chatBox.innerHTML += `<div class="error-message">Error: ${error.message}</div>`;
+            }
+        }
+
+        function isFarewellMessage(message) {
+            // Strict farewell detection (only user input is checked)
+            const farewellWords = ['bye', 'goodbye', 'thank you', 'thanks', 'end chat'];
+            return farewellWords.some(word => message.toLowerCase().includes(word));
+        }
+
+        async function triggerEvaluation(chatBox) {
+            const userInput = document.getElementById('userInput');
+            const sendButton = document.querySelector('button');
+            const evaluationBox = document.getElementById('evaluationBox');
+
+            // Disable input and button
+            userInput.disabled = true;
+            sendButton.disabled = true;
+
+            try {
+                const evalResponse = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'message=evaluate_conversation'
+                });
+
+                const evalData = await evalResponse.json();
+                if (evalData.evaluation) {
+                    evaluationBox.innerHTML = `<div>${evalData.evaluation}</div>`;
+                    evaluationBox.style.display = 'block';
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                } else {
+                    evaluationBox.innerHTML = `<div>No evaluation available.</div>`;
+                    evaluationBox.style.display = 'block';
+                }
+            } catch (error) {
+                chatBox.innerHTML += `<div class="error-message">Error during evaluation: ${error.message}</div>`;
+            }
+        }
+
+        // Allow Enter key to send message
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !conversationEnded) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

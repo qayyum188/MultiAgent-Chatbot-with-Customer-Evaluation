@@ -1,0 +1,113 @@
+/* Basic Reset */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    background: #fff;
+}
+
+/* Header Styling */
+.header {
+    background: #000;
+    color: white;
+    padding: 5px;
+}
+
+.title {
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.auth-links {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.auth-links a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Chat Container */
+.chat-container {
+    padding: 10px;
+    max-height: calc(100vh - 150px);
+    overflow-y: auto;
+}
+
+.chat-message {
+    margin: 5px 0;
+    font-size: 12px;
+}
+
+/* Input Area */
+.input-container {
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background: #fff;
+}
+
+input[type="text"] {
+    padding: 2px;
+    font-size: 12px;
+    width: 150px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 2px 10px;
+    font-size: 12px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Footer */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 5px;
+    font-size: 12px;
+    background: #fff;
+    border-top: 1px solid #eee;
+}
+
+/* Evaluation Box */
+.evaluation-box {
+    display: none;
+    margin: 10px 0;
+    padding: 5px;
+    font-size: 12px;
+    border-top: 1px solid #ccc;
+}
+
+/* Message Styling */
+.user-message, .bot-message {
+    margin: 5px 0;
+    padding: 2px 0;
+}
+
+.error-message {
+    color: red;
+    margin: 5px 0;
+    font-size: 12px;
+}
+
+/* Typing Indicator (optional) */
+.typing-indicator {
+    display: none;
+    margin: 5px 0;
+    font-size: 12px;
+    color: #666;
+}
