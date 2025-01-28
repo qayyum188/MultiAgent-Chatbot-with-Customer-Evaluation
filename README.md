@@ -3,7 +3,8 @@
 Welcome to the **AI Sales Representative Chatbot** repository! This project is an intelligent chatbot designed to streamline lead qualification and customer engagement. By leveraging Natural Language Processing (NLP) and conversational AI, the chatbot interacts with users, captures their requirements, evaluates their interest levels, and provides actionable insights for sales teams.
 
 ---
-
+![image text](https://github.com/qayyum188/MultiAgent-Chatbot-with-Customer-Evaluation/blob/97a397234db45096484c254aaa1eeea2d8751851/Screenshot%202025-01-28%20114314.png)
+---
 ## **Key Features**  
 - **Conversational Interaction**: Engages users in a natural dialogue to gather product or service preferences.  
 - **Interest Evaluation**: Uses sentiment analysis and NLP to assess user interest and assign a priority rating (1-10).  
