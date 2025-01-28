@@ -1,9 +1,8 @@
 # AI Sales Representative Chatbot 
 
 Welcome to the **AI Sales Representative Chatbot** repository! This project is an intelligent chatbot designed to streamline lead qualification and customer engagement. By leveraging Natural Language Processing (NLP) and conversational AI, the chatbot interacts with users, captures their requirements, evaluates their interest levels, and provides actionable insights for sales teams.
-[![image text](https://fastapi.tiangolo.com/)
 ---
-https://fastapi.tiangolo.com/
+[![image text](https://github.com/Mr-MeerMoazzam/EvrenAI-Sales-Agent/blob/31229f9ff430a56ff1d5dfc80671841c1ee1c389/Screenshot%202025-01-28%20114314.png)
 ---
 ## **Key Features**  
 - **Conversational Interaction**: Engages users in a natural dialogue to gather product or service preferences.  
